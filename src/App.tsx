@@ -75,7 +75,7 @@ const Hero = () => (
             Curriculum Vitae
           </div>
           <h1 className="text-7xl md:text-9xl font-bold mb-8 leading-[0.85] tracking-tight serif">
-            Exploring the <span className="italic">Frontiers</span> of AI.
+            Exploring the <button onClick={() => setSelectedPaperKey('frontiers')} className="italic hover:text-stone-400 decoration-ink/10 underline underline-offset-8 transition-all cursor-pointer">Frontiers</button> of AI.
           </h1>
           <p className="text-xl md:text-2xl italic serif text-stone-600 mb-10 max-w-2xl leading-relaxed">
             Multi-Agent, RAG, & Post-Training Researcher
@@ -105,9 +105,17 @@ const Hero = () => (
           className="md:col-span-4"
         >
           <div className="p-1 px-1 flex flex-col gap-6">
-             <div className="aspect-[3/4] bg-stone-200 editorial-border flex items-center justify-center p-8 grayscale">
-                <div className="text-[60px] md:text-[80px] font-black opacity-5 leading-none serif select-none">
-                  EDITORIAL<br />RESEARCH
+             <div className="aspect-[3/4] bg-stone-200 editorial-border overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-700">
+                <img 
+                  src="https://raw.githubusercontent.com/ryan201212212/raey_portfolio/3d1516d1b84e752490a1141be21d8fd61e6be200/Photo.png" 
+                  alt="Raeyoung Chang" 
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 flex items-center justify-center p-8 pointer-events-none select-none">
+                  <div className="text-[60px] md:text-[80px] font-black opacity-5 leading-none serif text-stone-900 text-center">
+                    EDITORIAL<br />RESEARCH
+                  </div>
                 </div>
              </div>
              <div>
@@ -410,6 +418,14 @@ export default function App() {
       impact: "Interpretability+",
       pdfUrl: "https://arxiv.org/pdf/2507.13190",
       abstract: "A graph-based evaluation framework designed to quantify the internal reasoning efficiency of multi-agent systems using Directed Acyclic Graphs (DAG). This approach introduces metrics to identify redundant communication paths."
+    },
+    frontiers: {
+      title: "AI Research Frontiers",
+      subtitle: "Collaborative Intelligence & Global Research Impact",
+      date: "Google Scholar Citation Archive",
+      impact: "Academic Outreach+",
+      pdfUrl: "https://scholar.google.com/citations?view_op=view_citation&hl=ko&user=OS612vEAAAAJ&citation_for_view=OS612vEAAAAJ:u-x6o8ySG0sC",
+      abstract: "This citation record archives peer-reviewed investigations into multi-agent interaction systems and CRM analytics. It explores the crossroads of business data insight and transformer-based reasoning hierarchies."
     }
   };
 
