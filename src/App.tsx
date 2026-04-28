@@ -60,7 +60,7 @@ const Navbar = () => (
   </nav>
 );
 
-const Hero = () => (
+const Hero = ({ onSelectFrontiers }: { onSelectFrontiers: () => void }) => (
   <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 bg-surface">
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid md:grid-cols-12 gap-12 items-start">
@@ -75,7 +75,30 @@ const Hero = () => (
             Curriculum Vitae
           </div>
           <h1 className="text-7xl md:text-9xl font-bold mb-8 leading-[0.85] tracking-tight serif">
-            Exploring the <button onClick={() => setSelectedPaperKey('frontiers')} className="italic hover:text-stone-400 decoration-ink/10 underline underline-offset-8 transition-all cursor-pointer">Frontiers</button> of AI.
+            Exploring the <span className="relative inline-flex items-center">
+              <button 
+                onClick={onSelectFrontiers} 
+                className="italic hover:text-stone-400 decoration-ink/10 underline underline-offset-8 transition-all cursor-pointer relative z-10"
+              >
+                Frontiers
+              </button>
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="absolute -top-16 -right-40 w-56 md:w-80 aspect-video editorial-border overflow-hidden shadow-2xl z-0 hidden lg:block rotate-3 hover:rotate-0 transition-transform duration-500"
+              >
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline 
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                >
+                  <source src="https://raw.githubusercontent.com/ryan201212212/raey_portfolio/efcecd2589549fddd9264ce43ce42d7a56606a78/%E1%84%8B%E1%85%A8%E1%84%89%E1%85%A1%E1%86%BC%20%E1%84%89%E1%85%A1%E1%86%AB%E1%84%8E%E1%85%AE%E1%86%AF%E1%84%86%E1%85%AE%E1%86%AF%201.mp4" type="video/mp4" />
+                </video>
+              </motion.div>
+            </span> of AI.
           </h1>
           <p className="text-xl md:text-2xl italic serif text-stone-600 mb-10 max-w-2xl leading-relaxed">
             Multi-Agent, RAG, & Post-Training Researcher
@@ -435,7 +458,7 @@ export default function App() {
     <div className="min-h-screen selection:bg-ink selection:text-surface font-sans">
       <Navbar />
       <main>
-        <Hero />
+        <Hero onSelectFrontiers={() => setSelectedPaperKey('frontiers')} />
         <CoreCompetencies />
         <ExperienceSection />
         <Publications onSelectPaper={(key) => setSelectedPaperKey(key)} />
