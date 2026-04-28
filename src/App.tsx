@@ -20,8 +20,10 @@ import {
   Layers,
   Cpu,
   TrendingUp,
-  X
+  X,
+  Sparkles
 } from "lucide-react";
+import { AIChat } from './components/AIChat';
 
 const SectionHeader = ({ title, subtitle, className = "" }: { title: string; subtitle?: string; className?: string }) => (
   <div className={`mb-12 ${className}`}>
@@ -119,6 +121,7 @@ const Hero = ({ onSelectFrontiers }: { onSelectFrontiers: () => void }) => (
               </div>
             </div>
           </div>
+          <AIChat />
         </motion.div>
 
         <motion.div
