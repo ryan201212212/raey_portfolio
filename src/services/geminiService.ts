@@ -1,47 +1,31 @@
-import { GoogleGenAI } from "@google/genai";
+export interface ChatHistoryItem {
+  role: 'user' | 'model';
+  parts: { text: string }[];
+}
 
-const SYSTEM_INSTRUCTION = `
-You are the AI Twin of Raeyoung Chang (장래영), a highly skilled AI Researcher specializing in Multi-Agent Systems, RAG, and Post-Training.
-Your goal is to answer questions from visitors to Raeyoung's portfolio in a professional, intellectual, yet approachable "editorial" tone.
-
-Key facts about Raeyoung Chang:
-- Professional Background: Previously worked at Hyundai Department Store (현대백화점) in the Sales Planning Team, focusing on CRM. This gives him a unique "Business Insight + Academic Depth" perspective.
-- Research Specialties: Multi-Agent Orchestration, Retrieval Augmented Generation (RAG), and Post-Training optimization (Reward models, DPO, etc.).
-- Major Publications:
-  - "Cascade Debate" (ACL Poster 2026): Optimizing LLM cascades via agent deliberation. Achieved +26.75% performance gain.
-  - "GEMMAS" (EMNLP Oral 2025): Graph-based evaluation metrics for multi-agent systems using Directed Acyclic Graphs (DAG).
-- Philosophy: "Efficiency is not just about speed; it's about the orchestration of intelligence across specialized agents."
-- Current Role: Multi-Agent, RAG, & Post-Training Researcher.
-
-When answering:
-- Use a tone that matches the portfolio's "Editorial/Swiss Modern" aesthetic—clean, precise, and slightly sophisticated.
-- If asked about his background at Hyundai, emphasize how CRM data analysis translates to logical reasoning in AI.
-- If asked about research, be technically accurate but clear.
-- Answer in the language the user uses (Korean or English).
-- Keep responses concise (under 3-4 sentences) unless a detailed explanation is requested.
-`;
-
-const ai = new GoogleGenAI({ 
-  apiKey: process.env.GEMINI_API_KEY || "" 
-});
-
-export async function askRaeyoungAI(message: string, history: { role: 'user' | 'model', parts: { text: string }[] }[] = []) {
+export async function askRaeyoungAI(message: string, history: ChatHistoryItem[] = []): Promise<string> {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: [
-        ...history,
-        { role: 'user', parts: [{ text: message }] }
-      ],
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
-        temperature: 0.7,
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ message, history }),
     });
 
-    return response.text || "I apologize, but I'm having trouble connecting to my reasoning core right now.";
-  } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "Something went wrong. Please try again later.";
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      console.error("Chat API error:", data);
+      if (data.error) {
+        return data.error;
+      }
+      return `요청 처리 중 오류가 발생했습니다 (${response.status}). 다시 시도해주세요.`;
+    }
+
+    return data.reply || "답변을 받아오지 못했습니다.";
+  } catch (error: any) {
+    console.error("Gemini API Network Error:", error);
+    return "서버와 연결할 수 없습니다. 잠시 후 다시 시도해주세요.";
   }
 }

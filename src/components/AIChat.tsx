@@ -35,7 +35,7 @@ export const AIChat = () => {
     setIsLoading(true);
 
     const history = messages.map(msg => ({
-      role: msg.role,
+      role: msg.role === 'user' ? 'user' : 'model',
       parts: [{ text: msg.content }]
     }));
 
@@ -76,7 +76,7 @@ export const AIChat = () => {
                   <Bot className="w-3 h-3" />
                   Raeyoung AI
                 </h3>
-                <p className="text-[9px] text-stone-400 mt-0.5">Powered by Gemini 3 Flash</p>
+                <p className="text-[9px] text-stone-400 mt-0.5">Powered by Gemini 3.8 Flash</p>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
@@ -91,10 +91,29 @@ export const AIChat = () => {
               className="h-64 overflow-y-auto p-4 space-y-4 font-sans selection:bg-ink selection:text-surface"
             >
               {messages.length === 0 && (
-                <div className="text-center py-8">
+                <div className="text-center py-4 space-y-3">
                   <p className="text-xs text-stone-400 italic">
-                    "Ask me about my research on Multi-Agent systems <br /> or my experience at Hyundai CRM team."
+                    "연구 분야나 현대백화점 CRM 실무 경험에 대해 자유롭게 질문해보세요."
                   </p>
+                  <div className="flex flex-wrap gap-1.5 justify-center pt-2">
+                    {[
+                      "멀티에이전트 시스템 연구",
+                      "현대백화점 CRM 경험",
+                      "Cascade Debate 논문 소개",
+                      "GEMMAS 연구"
+                    ].map((prompt, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          setInput(prompt);
+                        }}
+                        className="text-[10px] px-2.5 py-1 bg-surface border border-ink/10 hover:border-ink/40 text-stone-600 hover:text-ink transition-all rounded-sm cursor-pointer"
+                      >
+                        {prompt}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
               {messages.map((msg, i) => (

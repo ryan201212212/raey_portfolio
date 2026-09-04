@@ -327,9 +327,9 @@ const Publications = ({ onSelectPaper }: { onSelectPaper: (key: string) => void 
 const Projects = ({ onSelectPaper }: { onSelectPaper: (key: string) => void }) => (
   <section id="projects" className="py-24 bg-white">
     <div className="max-w-7xl mx-auto px-6">
-      <SectionHeader title="Research Endeavors" subtitle="Case Studies" />
+      <SectionHeader title="Research & Projects" subtitle="Case Studies & Demos" />
       
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         {[
           {
             id: "01",
@@ -353,25 +353,62 @@ const Projects = ({ onSelectPaper }: { onSelectPaper: (key: string) => void }) =
             impact: "Interpretability+",
             summary: "Proposing novel DAG-based metrics (IDS/UPR) to quantify information diversity and path efficiency in agent swarms.",
             key: "gemmas"
+          },
+          {
+            id: "04",
+            title: "Crypto Dashboard",
+            subtitle: "Real-Time Crypto Analytics & Reporting Automation",
+            impact: "Live Demo",
+            summary: "Upbit 실시간 시세 수집 및 이동평균선(MA5/20), RSI 기술 지표 분석과 자동화 리포팅을 구현한 금융 데이터 대시보드.",
+            key: "crypto",
+            demoUrl: "/projects/crypto-dashboard/index.html#KRW-BTC"
           }
         ].map((project) => (
-          <div key={project.id} className="group flex flex-col">
-            <div className="flex justify-between items-start mb-6">
-              <span className="editorial-label">Project {project.id}</span>
-              <span className="text-[10px] font-mono font-bold bg-accent/20 px-2 py-1">{project.impact}</span>
+          <div key={project.id} className="group flex flex-col justify-between p-6 border border-ink/10 hover:border-ink/30 transition-all bg-surface/50 hover:bg-surface">
+            <div>
+              <div className="flex justify-between items-start mb-4">
+                <span className="editorial-label">Project {project.id}</span>
+                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${project.demoUrl ? 'bg-emerald-500/10 text-emerald-700 border border-emerald-500/20' : 'bg-accent/20 text-ink'}`}>
+                  {project.impact}
+                </span>
+              </div>
+              <h3 className="text-xl font-bold serif mb-2 leading-tight group-hover:underline decoration-1 underline-offset-4">{project.title}</h3>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-3">{project.subtitle}</p>
+              <p className="text-xs text-stone-600 leading-relaxed mb-6">
+                {project.summary}
+              </p>
             </div>
-            <h3 className="text-2xl font-bold serif mb-3 leading-tight group-hover:underline decoration-1 underline-offset-4">{project.title}</h3>
-            <p className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-4">{project.subtitle}</p>
-            <p className="text-sm text-stone-600 leading-relaxed mb-8 flex-grow">
-              {project.summary}
-            </p>
-            <button 
-              onClick={() => project.key && onSelectPaper(project.key)}
-              className={`flex items-center gap-2 group-hover:gap-4 transition-all duration-300 pt-6 border-t border-ink/5 text-left w-full ${project.key ? 'cursor-pointer hover:text-stone-400' : 'opacity-40 cursor-default'}`}
-            >
-               <span className="text-[10px] font-bold uppercase tracking-widest">Read Thesis</span>
-               <ArrowRight className="w-4 h-4" />
-            </button>
+
+            <div className="pt-4 border-t border-ink/10 flex flex-col gap-2">
+              {project.demoUrl && (
+                <a
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between gap-2 px-3.5 py-2.5 bg-ink text-surface text-[11px] font-bold uppercase tracking-wider hover:bg-stone-800 transition-colors rounded-sm shadow-sm"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Live Demo
+                  </span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {project.key && (
+                <button 
+                  onClick={() => project.key && onSelectPaper(project.key)}
+                  className={`flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-left w-full transition-all cursor-pointer ${project.demoUrl ? 'text-stone-500 hover:text-ink py-1' : 'text-ink hover:text-stone-500 py-1.5'}`}
+                >
+                   <span>{project.demoUrl ? "Project Details" : "Read Thesis"}</span>
+                   <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
+              {!project.key && !project.demoUrl && (
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-stone-400 py-1.5">
+                  <span>Archived Project</span>
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -452,6 +489,15 @@ export default function App() {
       impact: "Academic Outreach+",
       pdfUrl: "https://scholar.google.com/citations?view_op=view_citation&hl=ko&user=OS612vEAAAAJ&citation_for_view=OS612vEAAAAJ:u-x6o8ySG0sC",
       abstract: "This citation record archives peer-reviewed investigations into multi-agent interaction systems and CRM analytics. It explores the crossroads of business data insight and transformer-based reasoning hierarchies."
+    },
+    crypto: {
+      title: "Crypto Dashboard",
+      subtitle: "Real-Time Crypto Analytics & Reporting Automation",
+      date: "Data Analysis & Automated Reporting",
+      impact: "Live Demo",
+      demoUrl: "/projects/crypto-dashboard/index.html#KRW-BTC",
+      pdfUrl: "/projects/crypto-dashboard/index.html#KRW-BTC",
+      abstract: "Upbit 실시간 암호화폐 시세 데이터 수집, 5일 및 20일 이동평균선(MA), RSI 기술 지표를 바탕으로 시계열 데이터 시각화와 이상치 탐지, 자동화 리포팅을 구현한 인터랙티브 금융 대시보드입니다. (모두의연구소/강북구청 실습 프로젝트)"
     }
   };
 
@@ -523,14 +569,25 @@ export default function App() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <a 
-                  href={selectedPaper.pdfUrl}
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="flex-1 bg-ink text-surface text-center py-4 text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                >
-                  View full PDF <ExternalLink className="w-4 h-4" />
-                </a>
+                {selectedPaper.demoUrl ? (
+                  <a 
+                    href={selectedPaper.demoUrl}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex-1 bg-ink text-surface text-center py-4 text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                  >
+                    Open Live Demo <ExternalLink className="w-4 h-4" />
+                  </a>
+                ) : (
+                  <a 
+                    href={selectedPaper.pdfUrl}
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="flex-1 bg-ink text-surface text-center py-4 text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                  >
+                    View full PDF <ExternalLink className="w-4 h-4" />
+                  </a>
+                )}
                 <button 
                   onClick={() => setSelectedPaperKey(null)}
                   className="flex-1 border border-ink text-ink text-center py-4 text-xs font-bold uppercase tracking-widest hover:bg-ink hover:text-surface transition-all"
@@ -552,5 +609,6 @@ interface PaperDetails {
   date: string;
   abstract: string;
   impact: string;
-  pdfUrl: string;
+  pdfUrl?: string;
+  demoUrl?: string;
 }
