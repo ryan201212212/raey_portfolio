@@ -287,7 +287,14 @@ const Publications = ({ onSelectPaper }: { onSelectPaper: (key: string) => void 
           <tbody className="divide-y divide-ink/10">
             {[
               { date: "2026.04", journal: "ACL Poster", role: "1st Co-author", status: "Published", highlight: true, key: "cascade" },
-              { date: "2026.02", journal: "IEEE Access", role: "1st Co-author", status: "Reviewing", highlight: false },
+              { 
+                date: "2026.02", 
+                journal: "IEEE Access", 
+                role: "1st Co-author", 
+                status: "Published", 
+                highlight: true, 
+                link: "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11657270" 
+              },
               { date: "2025.11", journal: "EMNLP Oral", role: "1st Co-author", status: "Published", highlight: true, key: "gemmas" },
               { date: "2024.12", journal: "KIISE Conference", role: "2nd Author", status: "Published", highlight: false },
             ].map((pub, idx) => (
@@ -301,6 +308,16 @@ const Publications = ({ onSelectPaper }: { onSelectPaper: (key: string) => void 
                     >
                       {pub.journal}
                     </button>
+                  ) : pub.link ? (
+                    <a
+                      href={pub.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`text-sm font-bold serif group-hover:italic text-left transition-all inline-flex items-center gap-1.5 ${pub.highlight ? 'text-ink' : 'text-stone-500'} hover:text-stone-400`}
+                    >
+                      <span>{pub.journal}</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-stone-400" />
+                    </a>
                   ) : (
                     <span className={`text-sm font-bold serif group-hover:italic ${pub.highlight ? 'text-ink' : 'text-stone-500'}`}>
                       {pub.journal}
@@ -309,11 +326,23 @@ const Publications = ({ onSelectPaper }: { onSelectPaper: (key: string) => void 
                 </td>
                 <td className="py-6 px-2 text-xs font-semibold text-stone-600">{pub.role}</td>
                 <td className="py-6 px-2 text-right">
-                  <span className={`text-[9px] font-bold uppercase border px-2 py-0.5 ${
-                    pub.status === "Published" ? 'border-ink text-ink' : 'border-stone-300 text-stone-400'
-                  }`}>
-                    {pub.status}
-                  </span>
+                  {pub.link ? (
+                    <a
+                      href={pub.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[9px] font-bold uppercase border border-ink px-2 py-0.5 text-ink hover:bg-ink hover:text-surface transition-colors rounded-none"
+                    >
+                      <span>{pub.status}</span>
+                      <ExternalLink className="w-2.5 h-2.5" />
+                    </a>
+                  ) : (
+                    <span className={`text-[9px] font-bold uppercase border px-2 py-0.5 ${
+                      pub.status === "Published" ? 'border-ink text-ink' : 'border-stone-300 text-stone-400'
+                    }`}>
+                      {pub.status}
+                    </span>
+                  )}
                 </td>
               </tr>
             ))}

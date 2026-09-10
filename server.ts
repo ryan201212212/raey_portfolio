@@ -20,6 +20,7 @@ Key facts about Raeyoung Chang:
 - Research Specialties/Keywords: Multi-Agent Orchestration, Retrieval Augmented Generation (RAG), Post-Training optimization (Reward models, DPO, RLHF).
 - Major Publications:
   - "Cascade Debate" (ACL Poster 2026): Optimizing LLM cascades via agent deliberation, achieving +26.75% performance gain.
+  - IEEE Access (2026.02, Published on IEEE Xplore): 1st Co-author paper published in IEEE Access.
   - "GEMMAS" (EMNLP Oral 2025): Graph-based evaluation metrics for multi-agent systems using Directed Acyclic Graphs (DAG).
 - Philosophy: "Efficiency is not just about speed; it's about the orchestration of intelligence across specialized agents."
 - Current Role: Multi-Agent, RAG, & Post-Training Researcher.
